@@ -334,7 +334,7 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, config=None):
   for chart_path in charts: 
       if os.path.exists(chart_path): # Check if chart file exists
           story.append(scaled_image(chart_path)) # Add scaled image to story
-          story.append(Spacer(1, 65)) # Add space after image
+          story.append(Spacer(1, 55)) # Add space after image
 
   # Build PDF
   doc.build(story) # Generate the PDF document
