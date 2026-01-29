@@ -210,6 +210,7 @@ def save_returns_distribution(port_rets, var_95, var_99, out_path):
   plt.axvline(var_95, linestyle="--", linewidth=2, label=f"VaR 95% ({var_95:.2%})", color='#808080') # VaR 95% line
   plt.axvline(var_99, linestyle=":", linewidth=2, label=f"VaR 99% ({var_99:.2%})", color='#808080') # VaR 99% line
   plt.axvline(mean_ret, linestyle="-", linewidth=1.5, label=f"Mean ({mean_ret:.2%})", color='#808080') # Mean return line
+  plt.title("Distribution of Daily Portfolio Returns", fontsize=20, pad=20)  
   plt.xlabel("Daily Return") # X-axis label
   plt.ylabel("Probability Density") # Y-axis label
   ax = plt.gca() # Get current axis
@@ -334,7 +335,7 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, config=None):
   for chart_path in charts: 
       if os.path.exists(chart_path): # Check if chart file exists
           story.append(scaled_image(chart_path)) # Add scaled image to story
-          story.append(Spacer(1, 40)) # Add space after image
+          story.append(Spacer(1, 65)) # Add space after image
 
   # Build PDF
   doc.build(story) # Generate the PDF document
