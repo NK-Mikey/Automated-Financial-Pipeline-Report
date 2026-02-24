@@ -1,6 +1,6 @@
 name: Daily Portfolio Report
 
-# Trigger schedule and manual run
+# Trigger schedule run
 on:
   schedule:
     - cron: "0 14 * * *"  # Runs every day at 14:00 UTC
@@ -11,27 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Checkout the repository
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # Step 2: Set up Python
+      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
-      # Step 3: Install dependencies
+      # Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Create reports folder
+      # Create reports folder
       - name: Create reports directory
         run: mkdir -p reports
 
-      # Step 5: Run the main portfolio report script
+      # Run the main portfolio report script
       - name: Run portfolio report
         env:
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
@@ -42,7 +42,7 @@ jobs:
         run: |
           python main.py
 
-      # Step 6: Upload PDF report as artifact (optional)
+      # Upload PDF report as artifact (optional)
       - name: Upload PDF report artifact
         uses: actions/upload-artifact@v4
         with:
