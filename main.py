@@ -311,7 +311,7 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
     )
     story.append(Paragraph("Portfolio Commentary", styles['Heading2']))
     story.append(Spacer(1, 8))
-    story.append(Paragraph(commentary, styles['Normal']))
+    story.append(Paragraph(commentary, justified_style))
     story.append(Spacer(1, 30))
 
   # Portfolio metrics table
