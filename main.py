@@ -306,7 +306,7 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
   if commentary:
     justified_style = ParagraphStyle( # Aligns the text to justify
         name = 'Justified',
-        parent = styles['normal'],
+        parent = styles['Normal'],
         alignment = TA_JUSTIFY
     )
     story.append(Paragraph("Portfolio Commentary", styles['Heading2']))
