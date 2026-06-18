@@ -304,7 +304,7 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
 
   # AI Commentary
   if commentary:
-    justified_style = ParagraphyStyle( # Aligns the text to justify
+    justified_style = ParagraphStyle( # Aligns the text to justify
         name = 'Justified',
         parent = styles['normal'],
         alignment = TA_JUSTIFY
