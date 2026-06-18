@@ -13,11 +13,11 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Set up Python
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -45,7 +45,7 @@ jobs:
 
       # Upload PDF report as artifact (optional)
       - name: Upload PDF report artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: portfolio-report
           path: reports/*.pdf
