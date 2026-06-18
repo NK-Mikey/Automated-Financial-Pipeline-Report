@@ -22,6 +22,8 @@ from PIL import Image as PILImage
 
 from send_email import send_email_smtp
 
+from commentary import generate_commentary
+
 # ===============================
 # PART 1: CONFIGURATION
 # ===============================
@@ -281,7 +283,7 @@ def scaled_image(path, max_width=7.5*inch, max_height=7*inch):
   return Image(path, width=width, height=height)
 
 # Function to create PDF report
-def create_pdf_report(report_path, metrics, asset_metrics, charts, config=None):
+def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=None):
   doc = SimpleDocTemplate(
       report_path,
       pagesize=letter, 
@@ -298,6 +300,13 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, config=None):
   story.append(Spacer(1, 14)) # Add space after title
   story.append(Paragraph(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (GMT)", styles['Normal'])) # Add date
   story.append(Spacer(1, 30)) # Add space after date
+
+  # AI Commentary
+  if commentary:
+    story.append(Paragraph("Portfolio Commentary", styles['Heading2']))
+    story.append(Spacer(1, 8))
+    story.append(Paragraph(commentary, styles['Normal']))
+    story.append(Spacer(1, 30))
 
   # Portfolio metrics table
   data = [["Metric", "Value"]] # Table header
@@ -398,9 +407,12 @@ def main():
     save_rolling_volatility(port_rets, charts[4])
     save_correlation_heatmap(rets, charts[5])
 
+    # Generate AI commentary from computed metrics
+    commentary = generate_commentary(metrics)
+    
     # Create PDF report
     report_path = os.path.join(REPORT_DIR, f"portfolio_report_{end.strftime('%Y%m%d')}.pdf")
-    create_pdf_report(report_path, metrics, asset_metrics, charts)
+    create_pdf_report(report_path, metrics, asset_metrics, charts, commentary = commentary)
 
     # Send email with PDF report
     send_email_smtp(
