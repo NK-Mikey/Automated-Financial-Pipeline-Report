@@ -16,8 +16,9 @@ from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Image, Table, TableStyle
+from reportlab.lib.enums import TA_JUSTIFY
 from PIL import Image as PILImage
 
 from send_email import send_email_smtp
@@ -303,6 +304,11 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
 
   # AI Commentary
   if commentary:
+    justified_style = ParagraphyStyle( # Aligns the text to justify
+        name = 'Justified',
+        parent = styles['normal'],
+        alignment = TA_JUSTIFY
+    )
     story.append(Paragraph("Portfolio Commentary", styles['Heading2']))
     story.append(Spacer(1, 8))
     story.append(Paragraph(commentary, styles['Normal']))
