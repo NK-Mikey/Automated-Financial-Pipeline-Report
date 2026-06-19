@@ -347,7 +347,7 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
   story.append(Spacer(1, 30)) # Add space after table
 
   # Charts 
-   for chart_path in charts: 
+  for chart_path in charts: 
       if os.path.exists(chart_path): # Check if chart file exists
           story.append(scaled_image(chart_path)) # Add scaled image to story
           story.append(Spacer(1, 45)) # Add space after image
