@@ -17,7 +17,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Image, Table, TableStyle
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Image, Table, TableStyle, PageBreak
 from reportlab.lib.enums import TA_JUSTIFY
 from PIL import Image as PILImage
 
@@ -312,7 +312,7 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
     story.append(Paragraph("Portfolio Commentary", styles['Heading2']))
     story.append(Spacer(1, 8))
     story.append(Paragraph(commentary, justified_style))
-    story.append(Spacer(1, 30))
+    story.append(Spacer(1, 60))
 
   # Portfolio metrics table
   data = [["Metric", "Value"]] # Table header
@@ -346,11 +346,18 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
   story.append(tbl2) # Add table to story
   story.append(Spacer(1, 30)) # Add space after table
 
-  # Charts
-  for chart_path in charts: 
-      if os.path.exists(chart_path): # Check if chart file exists
-          story.append(scaled_image(chart_path)) # Add scaled image to story
-          story.append(Spacer(1, 65)) # Add space after image
+  # Charts — 2 per page with consistent sizing
+  chart_width = 7.5 * inch
+  chart_height = 3.5 * inch  # Fixed height for all charts
+
+  chart_pairs = [charts[i:i+2] for i in range(0, len(charts), 2)]
+  
+  for pair in chart_pairs:
+      for chart_path in pair:
+          if os.path.exists(chart_path):
+              story.append(Image(chart_path, width=chart_width, height=chart_height))
+              story.append(Spacer(1, 20))
+      story.append(PageBreak())
 
   # Build PDF
   doc.build(story) # Generate the PDF document
