@@ -302,17 +302,29 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
   story.append(Paragraph(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (GMT)", styles['Normal'])) # Add date
   story.append(Spacer(1, 30)) # Add space after date
 
-  # AI Commentary
+   # AI Commentary
   if commentary:
-    justified_style = ParagraphStyle( # Aligns the text to justify
-        name = 'Justified',
-        parent = styles['Normal'],
-        alignment = TA_JUSTIFY
+    justified_style = ParagraphStyle(
+        name='Justified',
+        parent=styles['Normal'],
+        alignment=TA_JUSTIFY
+    )
+    disclaimer_style = ParagraphStyle(
+        name='Disclaimer',
+        parent=styles['Normal'],
+        fontSize=8,
+        textColor=colors.grey,
+        alignment=TA_JUSTIFY
     )
     story.append(Paragraph("Portfolio Commentary", styles['Heading2']))
+    story.append(Spacer(1, 4))
+    story.append(Paragraph(
+        "AI-Generated Commentary — This summary was produced by an automated language model (Claude, Anthropic) and does not constitute financial advice.",
+        disclaimer_style
+    ))
     story.append(Spacer(1, 8))
     story.append(Paragraph(commentary, justified_style))
-    story.append(Spacer(1, 60))
+    story.append(Spacer(1, 30))
 
   # Portfolio metrics table
   data = [["Metric", "Value"]] # Table header
@@ -352,8 +364,25 @@ def create_pdf_report(report_path, metrics, asset_metrics, charts, commentary=No
           story.append(scaled_image(chart_path)) # Add scaled image to story
           story.append(Spacer(1, 35)) # Add space after image
 
+  # Footer disclaimer
+  footer_style = ParagraphStyle(
+      name='Footer',
+      parent=styles['Normal'],
+      fontSize=7,
+      textColor=colors.grey,
+      alignment=TA_JUSTIFY
+  )
+  story.append(Spacer(1, 30))
+  story.append(Paragraph(
+      "DISCLAIMER: This report is generated automatically for informational and demonstration purposes only. "
+      "The commentary and analysis contained herein are AI-generated and have not been reviewed by a qualified financial adviser. "
+      "Nothing in this report constitutes financial advice, investment recommendations, or a solicitation to buy or sell any security. "
+      "Past performance is not indicative of future results.",
+      footer_style
+  ))
+
   # Build PDF
-  doc.build(story) # Generate the PDF document
+  doc.build(story)
 
 
 
