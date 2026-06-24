@@ -135,6 +135,7 @@ Ensure all environment variables are set before running locally.
 ## 📈 Why This Matters
 
 This project demonstrates:
+> **Disclaimer:** This project is built for portfolio demonstration purposes only. Not intended for actual investment decisions. AI-generated commentary is clearly labelled as synthetic within the report and does not constitute financial advice.
 
 - LLM API integration into a production Python pipeline
 - Real-world analytics automation with scheduled execution
