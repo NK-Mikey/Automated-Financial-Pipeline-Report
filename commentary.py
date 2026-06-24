@@ -20,7 +20,9 @@ Here are today's portfolio metrics:
 Write a three-sentence plain prose summary interpreting these numbers for a stakeholder.
 Do not use markdown, bullet points, headers, or bold text.
 Use percentage format where appropriate (e.g. 14.2% not 0.142).
-Be specific about whether performance is strong, weak, or moderate and why."""
+Be specific about whether performance is strong, weak, or moderate and why.
+Do not make specific investment recommendations or suggest buy/sell actions.
+Use observational language only (e.g. "the data suggests", "this may indicate")."""
 
     # API reponse object
     response = client.messages.create(
